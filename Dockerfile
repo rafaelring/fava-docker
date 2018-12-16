@@ -6,7 +6,7 @@ ENV BUILDDEPS "libxml2-dev libxslt-dev gcc musl-dev mercurial git npm make g++"
 ENV PV "3.6"
 
 WORKDIR /root
-RUN apk add --update ${BUILDDEPS}
+RUN apk add --no-cache ${BUILDDEPS}
 
 RUN hg clone --config hostsecurity.bitbucket.org:fingerprints=${FINGERPRINT} https://bitbucket.org/blais/beancount
 RUN echo "Beancount version:" && cd beancount && hg log -l1
@@ -25,7 +25,7 @@ RUN make -C fava mostlyclean
 RUN python3 -mpip install ./fava
 
 RUN echo "Strip .so files to reduce image size:"
-RUN find /usr/local/lib/python${PV}/site-packages -name *.so -print0|xargs -0 strip -v
+RUN find /usr/local/lib/python${PV}/site-packages -name '*.so' -print0|xargs -0 strip -v
 RUN echo "Remove unused files to reduce image size:"
 RUN find /usr/local/lib/python${PV} -name __pycache__ -exec rm -rf -v {} +
 RUN find /usr/local/lib/python${PV} -name '*.dist-info' -exec rm -rf -v {} +
@@ -41,4 +41,4 @@ COPY --from=build_env /usr/local/bin/fava /usr/local/bin
 # Default fava port number
 EXPOSE 5000
 
-CMD fava $FAVA_OPTIONS $BEANCOUNT_INPUT_FILE
+CMD ["sh", "-c", "fava $FAVA_OPTIONS $BEANCOUNT_INPUT_FILE"]
