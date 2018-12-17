@@ -28,7 +28,8 @@ RUN echo "Strip .so files to reduce image size:"
 RUN find /usr/local/lib/python${PV}/site-packages -name '*.so' -print0|xargs -0 strip -v
 RUN echo "Remove unused files to reduce image size:"
 RUN find /usr/local/lib/python${PV} -name __pycache__ -exec rm -rf -v {} +
-RUN find /usr/local/lib/python${PV} -name '*.dist-info' -exec rm -rf -v {} +
+RUN find /usr/local/lib/python${PV} -type f -name '*.dist-info' -delete
+RUN find /usr/local/lib/python${PV} -type f -name '*.exe' -delete
 
 
 FROM python:3.6.7-alpine3.8
