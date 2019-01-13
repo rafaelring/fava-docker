@@ -1,4 +1,4 @@
-FROM python:3.6.7-alpine3.8 as build_env
+FROM python:3.7.2-alpine3.8 as build_env
 
 ENV FINGERPRINT "sha256:32:12:90:9a:70:64:82:1c:5b:52:cc:c3:0a:d0:79:db:e1:a8:62:1b:9a:9a:4c:f4:72:40:1c:a7:3a:d3:0a:8c"
 ENV BUILDDEPS "libxml2-dev libxslt-dev gcc musl-dev mercurial git npm make g++"
@@ -32,7 +32,7 @@ RUN find /usr/local/lib/python${PV} -type f -name '*.dist-info' -delete
 RUN find /usr/local/lib/python${PV} -type f -name '*.exe' -delete
 
 
-FROM python:3.6.7-alpine3.8
+FROM python:3.7.2-alpine3.8
 ENV PV "3.6"
 ENV BEANCOUNT_INPUT_FILE ""
 ENV FAVA_OPTIONS "-H 0.0.0.0"
