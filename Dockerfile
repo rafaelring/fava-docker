@@ -11,7 +11,7 @@ RUN apk add --no-cache ${BUILDDEPS}
 RUN hg clone --config hostsecurity.bitbucket.org:fingerprints=${FINGERPRINT} https://bitbucket.org/blais/beancount
 RUN echo "Beancount version:" && cd beancount && hg log -l1
 
-RUN git clone https://github.com/beancount/fava.git
+RUN git clone --branch v1.10 https://github.com/beancount/fava.git
 RUN echo "Fava version:" && cd fava && git log -1
 
 RUN echo "Deleting symlink files as they will cause docker build error" && find ./ -type l -delete -print
