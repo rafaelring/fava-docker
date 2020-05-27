@@ -1,6 +1,6 @@
 FROM python:3.7.3-alpine3.9 as build_env
 
-ENV FINGERPRINT "sha256:32:12:90:9a:70:64:82:1c:5b:52:cc:c3:0a:d0:79:db:e1:a8:62:1b:9a:9a:4c:f4:72:40:1c:a7:3a:d3:0a:8c"
+ENV FINGERPRINT "sha256:5E:7E:34:26:F0:DB:84:8F:53:5D:3E:A5:63:B2:FD:A0:88:3F:9D:1C:53:72:67:83:1C:A3:7F:34:D1:29:D6:86"
 ENV BUILDDEPS "libxml2-dev libxslt-dev gcc musl-dev mercurial git npm make g++"
 # Short python version.
 ENV PV "3.7"
@@ -11,7 +11,7 @@ RUN apk add --no-cache ${BUILDDEPS}
 RUN hg clone --config hostsecurity.bitbucket.org:fingerprints=${FINGERPRINT} https://bitbucket.org/blais/beancount
 RUN echo "Beancount version:" && cd beancount && hg log -l1
 
-RUN git clone --branch v1.10 https://github.com/beancount/fava.git
+RUN git clone --branch v1.14 https://github.com/beancount/fava.git
 RUN echo "Fava version:" && cd fava && git log -1
 
 RUN echo "Deleting symlink files as they will cause docker build error" && find ./ -type l -delete -print
